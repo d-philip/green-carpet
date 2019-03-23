@@ -1,11 +1,15 @@
 var x,y;
+var counter;
 //Matrix for randomizing initial states of the stoplight at each intersection
 var stopLightStatus =[[Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
                       [Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
                       [Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
                       [Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
                       [Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)]];
-var counter;
+
+var stopLightRightOrDown = [120,290,460,630,800];
+var stopLightLeftOrUp = [230,400,570,740,910];
+
 //Number of seconds to wait before switching times fps
 const seconds = 5*60;
 let car;
@@ -28,11 +32,6 @@ function draw() {
     }
   }
 
-  //Draws cars and moves them
-  car.move();
-  car.brake();
-  car.display();
-
   //Draws stoplights
   for(var i = 0; i < 5; i++){
     for(var j = 0; j < 5; j++){
@@ -51,8 +50,14 @@ function draw() {
     }
   }
 
-  counter++;
+
+  //Draws cars and moves them
+  car.move();
+  car.brake();
+  car.display();
+
   //Changes each stoplight after seconds amount of time
+  counter++;
   if(counter >= seconds){
     for(var i = 0; i < 5; i++){
       for(var j = 0; j < 5; j++){
@@ -87,6 +92,7 @@ class Car{
     this.c = color(100, 150, 200);
   }
   move(){
+
     this.x += 1;
     //this.y += random(-this.speed, this.speed);
   }
