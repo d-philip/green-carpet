@@ -146,41 +146,29 @@ class Car{
 
   move(){
 
-    if(this.direction == 'x'){
-      if(this.multi<=6){
+  if(this.direction == 'x'){
+    if(this.multi<=6){
       if(this.x>=130+(170*this.multi)){
         if(stopLightStatus[this.multi][0]==3){
           this.x += this.speed;
           this.multi+=1;
         }
-
       }
-
-       else{ this.x += this.speed;
-
-        }
-
+    else{ this.x += this.speed;}
     }
   }
-     if(this.direction == 'y'){
-      if(this.multi<=4){
+   if(this.direction == 'y'){
+    if(this.multi<=4){
       if(this.y>=130+(170*this.multi)){
         if(stopLightStatus[0][this.multi]==0){
           this.y += this.speed;
           this.multi+=1;
         }
-
       }
-
-       else{ this.y += this.speed;
-
-        }
-
+      else{ this.y += this.speed;}
     }
   }
-
-
-  }
+}
 
   brake(){
     if(this.speed > 0)
