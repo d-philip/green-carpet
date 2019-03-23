@@ -1,4 +1,5 @@
 var x,y;
+var multi;
 var counter;
 //Matrix for randomizing initial states of the stoplight at each intersection
 var stopLightStatus =[[Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
@@ -11,15 +12,16 @@ var stopLightRightOrDown = [120,290,460,630,800];
 var stopLightLeftOrUp = [230,400,570,740,910];
 
 //Number of seconds to wait before switching times fps
-const seconds = 5*60;
+const seconds = 1*60;
 let carx, cary;
 
 function setup() {
   createCanvas(1040,1040);
   counter = seconds;
   frameRate(60);
-  carx = new Car(100, 180, 'x', 1);
+  carx = new Car(100, 180, 'x', 2);
   cary = new Car(160, 100, 'y', 1);
+  multi=0;
 }
 
 function draw() {
@@ -89,18 +91,48 @@ class Car{
   constructor(x, y, direction, speed){
     this.x = x;
     this.y = y;
+    this.multi=0;
     this.speed = speed;
     this.c = color(100, 150, 200);
     this.direction = direction;
   }
   
   move(){
+    
     if(this.direction == 'x'){
-        this.x += this.speed;
+      if(this.multi<=6){
+      if(this.x>=130+(170*this.multi)){
+        if(stopLightStatus[this.multi][0]==3){
+          this.x += this.speed;
+          this.multi+=1;
+        }
+        
+      }
+
+       else{ this.x += this.speed;
+        
+        }
+
     }
-    else{
-      this.y += this.speed;
+  }
+     if(this.direction == 'y'){
+      if(this.multi<=4){
+      if(this.y>=130+(170*this.multi)){
+        if(stopLightStatus[0][this.multi]==0){
+          this.y += this.speed;
+          this.multi+=1;
+        }
+        
+      }
+
+       else{ this.y += this.speed;
+        
+        }
+
     }
+  }
+
+    
   }
 
   brake(){
