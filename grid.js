@@ -95,10 +95,10 @@ class Car{
   }
   move(){
     if(this.direction == 'x'){
-      this.x += 1;
+      this.x += speed;
     }
     else{
-      this.y += 1;
+      this.y += speed;
     }
   }
   brake(){
