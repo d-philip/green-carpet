@@ -93,23 +93,44 @@ class Car{
     this.c = color(100, 150, 200);
     this.direction = direction;
   }
+  
   move(){
     if(this.direction == 'x'){
-      this.x += speed;
+        this.x += this.speed;
     }
     else{
-      this.y += speed;
+      this.y += this.speed;
     }
   }
+
   brake(){
     if(this.speed > 0)
     {
       this.speed -= 0.3;
     }
   }
+
   display(){
     fill(this.c);
     rect(this.x, this.y, 10, 10);
+  }
+
+  //Assigns a numeric value to the direction of movement
+  direction(){
+    //Moving right
+    if(direction == 'x' && speed >= 0){
+      return 3;
+    }
+    //Moving left
+    else if(direction == 'x' && speed < 0){
+      return 1;
+    }
+    //Moving down
+    else if(direction == 'y' && speed >= 0){
+      return 0;
+    }
+    //moving up
+    else return 2;
   }
 }
 
