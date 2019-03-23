@@ -14,7 +14,7 @@ var stopLightRightOrDown = [120,290,460,630,800];
 var stopLightLeftOrUp = [230,400,570,740,910];
 
 //Number of seconds to wait before switching times fps
-const seconds = 5*60;
+const seconds = 2*60;
 let carx, cary, car1, car2;
 
 var cars = [];
@@ -25,15 +25,8 @@ function setup() {
   frameRate(60);
   multi = 0;
   carx = new Car(100, 180, 'x', 2);
-  cary = new Car(160, 100, 'y', 1);
+  cary = new Car(160, 100, 'y', 2);
 
-  cars[0] = new Car(100, 350, 'x', 2);
-  cars[1] = new Car(200, 350, 'x', 1);
-  cars[2] = new Car(900, 350, 'x', 0);
-  cars[3] = new Car(1000, 350, 'x', -3);
-  cars[4] = new Car(800, 350, 'x', -1);
-  cars[5] = new Car(340, 350, 'y', 4);
-  cars[6] = new Car(340, 720, 'y', 1);
 }
 
 function draw() {
