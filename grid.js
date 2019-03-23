@@ -74,7 +74,7 @@ function draw() {
   for(var i = 0; i < cars.length; i++){
     blocked = false;
     for(var j = 0; j < cars.length; j++){
-      if(i!=j && lookahead(cars[i],cars[j])){
+      if(i!=j && lookahead(cars[i],cars[j])){ //If any car blocks path, set blocked to true and stop any movement
         blocked = true;
       }
     }
@@ -112,20 +112,20 @@ function chooseColor(i,j,pos){
 }
 
 
-function lookahead(car1,car2){
-  if(car1.speed >= 0 && car2.speed >= 0){
-    if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x < car2.x && (car2.x - car1.x) < 20)){
+function lookahead(car1,car2){ //Car1 is the "chase car", whose position and direction is being compared to car2
+  if(car1.speed >= 0 && car2.speed >= 0){ //check if both cars are moving in a positive direction
+    if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x < car2.x && (car2.x - car1.x) < 20)){ //check if both are moving along the same x axis, if car1 is behind car2, and if car1 is too close to car2
         return true;
     }
-    else if(car1.direction == 'y' && car2.direction == 'y' && car1.x == car2.x && (car1.y < car2.y && (car2.y - car1.y) < 20)){
+    else if(car1.direction == 'y' && car2.direction == 'y' && car1.x == car2.x && (car1.y < car2.y && (car2.y - car1.y) < 20)){ //check if both are moving along the same y axis, if car1 is behind car2, and if car1 is too close to car2
         return true;
     }
   }
   else if(car1.speed <= 0 && car2.speed <= 0){
-    if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x > car2.x && (car1.x - car2.x) < 20)){
+    if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x > car2.x && (car1.x - car2.x) < 20)){ //check if both are moving along the same x axis, if car1 is behind car2, and if car1 is too close to car2
         return true;
     }
-    else if(car1.direction == 'y' && car2.direction == 'y' && car1.x == car2.x && (car1.y > car2.y && (car1.y - car2.y) < 20)){
+    else if(car1.direction == 'y' && car2.direction == 'y' && car1.x == car2.x && (car1.y > car2.y && (car1.y - car2.y) < 20)){ //check if both are moving along the same y axis, if car1 is behind car2, and if car1 is too close to car2
         return true;
     }
   }
