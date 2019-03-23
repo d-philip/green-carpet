@@ -8,15 +8,16 @@ var stopLightStatus =[[Math.floor(Math.random()*4),Math.floor(Math.random()*4),M
 var counter;
 //Number of seconds to wait before switching times fps
 const seconds = 5*60;
-let carx, cary;
+let carx, cary, amb;
 
 function setup() {
   createCanvas(1040,1040);
   counter = seconds;
   //Randomly generates initial states for each stop light
   frameRate(60);
-  carx = new Car(100, 180, 'x', 1);
-  cary = new Car(160, 100, 'y', 1);
+  carx = new Car(600, 850, 'x', -1);
+  cary = new Car(510, 100, 'y', 1.5);
+  amb = new Ambulance(100,500,'x',3);
 }
 
 function draw() {
@@ -50,9 +51,11 @@ function draw() {
   //Draws cars and moves them
   carx.display();
   cary.display();
+  amb.display();
 
   carx.move();
   cary.move();
+  amb.move();
 
   counter++;
   //Changes each stoplight after seconds amount of time
@@ -72,7 +75,7 @@ function draw() {
 
 }
 
-//Decides whether he light should be green or red
+//Decides whether the light should be green or red
 function chooseColor(i,j,pos){
   if(stopLightStatus[i][j] == pos){
       return true;
@@ -80,6 +83,10 @@ function chooseColor(i,j,pos){
   else {
       return false;
   }
+}
+
+function changeLight(){
+
 }
 
 class Car{
@@ -92,10 +99,10 @@ class Car{
   }
   move(){
     if(this.direction == 'x'){
-      this.x += 1;
+      this.x += this.speed;
     }
     else{
-      this.y += 1;
+      this.y += this.speed;
     }
   }
   brake(){
@@ -111,5 +118,8 @@ class Car{
 }
 
 class Ambulance extends Car{
-
+  constructor(x, y, direction, speed){
+    super(x, y, direction, speed);
+    super.c = color(225, 185, 100);
+  }
 }
