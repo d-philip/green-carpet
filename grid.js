@@ -1,5 +1,3 @@
-
-
 var x,y;
 var multi;
 var counter;
@@ -14,8 +12,8 @@ var stopLightRightOrDown = [120,290,460,630,800];
 var stopLightLeftOrUp = [230,400,570,740,910];
 
 //Number of seconds to wait before switching times fps
-const seconds = 2*60;
-let carx, cary, car1, car2;
+const seconds = 5*60;
+let car1, car2;
 
 var cars = [];
 
@@ -24,9 +22,17 @@ function setup() {
   counter = seconds;
   frameRate(60);
   multi = 0;
-  carx = new Car(100, 180, 'x', 2);
-  cary = new Car(160, 100, 'y', 2);
 
+  cars[0] = new Car(100, 180, 'x', 1);
+  cars[1] = new Car(100, 350, 'x', 2);
+  cars[2] = new Car(100, 520, 'x', 1);
+  cars[3] = new Car(100, 690, 'x', 3);
+  cars[4] = new Car(100, 860, 'x', 1);
+  cars[5] = new Car(180, 100, 'y', 1);
+  cars[6] = new Car(350, 100, 'y', 3);
+  cars[7] = new Car(520, 100, 'y', 2);
+  cars[8] = new Car(690, 100, 'y', 2);
+  cars[9] = new Car(860, 100, 'y', 1);
 }
 
 function draw() {
@@ -57,10 +63,7 @@ function draw() {
     }
   }
 
-  //Draws cars and moves them
-  carx.display();
-  cary.display();
-
+  //Draws cars
   for(var i = 0; i < cars.length; i++){
     cars[i].display();
   }
@@ -79,10 +82,6 @@ function draw() {
       cars[i].move();
     }
   }
-
-
-  carx.move();
-  cary.move();
 
   //Changes each stoplight after seconds amount of time
   counter++;
