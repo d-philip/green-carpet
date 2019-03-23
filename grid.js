@@ -122,18 +122,18 @@ function chooseColor(i,j,pos){
 
 function lookahead(car1,car2){
   if(car1.speed >= 0 && car2.speed >= 0){
-    if(car1.direction == 'x' && car2.direction == 'x' && (car1.x < car2.x && (car2.x - car1.x) < 20)){
+    if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x < car2.x && (car2.x - car1.x) < 20)){
         return true;
     }
-    else if(car1.direction == 'y' && car2.direction == 'y' && (car1.y < car2.y && (car2.y - car1.y) < 20)){
+    else if(car1.direction == 'y' && car2.direction == 'y' && car1.x == car2.x && (car1.y < car2.y && (car2.y - car1.y) < 20)){
         return true;
     }
   }
   else if(car1.speed <= 0 && car2.speed <= 0){
-    if(car1.direction == 'x' && car2.direction == 'x' && (car1.x > car2.x && (car1.x - car2.x) < 20)){
+    if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x > car2.x && (car1.x - car2.x) < 20)){
         return true;
     }
-    else if(car1.direction == 'y' && car2.direction == 'y' && (car1.y > car2.y && (car1.y - car2.y) < 20)){
+    else if(car1.direction == 'y' && car2.direction == 'y' && car1.x == car2.x && (car1.y > car2.y && (car1.y - car2.y) < 20)){
         return true;
     }
   }
