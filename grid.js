@@ -12,13 +12,14 @@ var stopLightLeftOrUp = [230,400,570,740,910];
 
 //Number of seconds to wait before switching times fps
 const seconds = 5*60;
-let car;
+let carx, cary;
 
 function setup() {
   createCanvas(1040,1040);
   counter = seconds;
   frameRate(60);
-  car = new Car();
+  carx = new Car(100, 180, 'x', 1);
+  cary = new Car(160, 100, 'y', 1);
 }
 
 function draw() {
@@ -49,11 +50,12 @@ function draw() {
     }
   }
 
-
   //Draws cars and moves them
-  car.move();
-  car.brake();
-  car.display();
+  carx.display();
+  cary.display();
+
+  carx.move();
+  cary.move();
 
   //Changes each stoplight after seconds amount of time
   counter++;
@@ -84,20 +86,25 @@ function chooseColor(i,j,pos){
 }
 
 class Car{
-  constructor(){
-    this.x = 50;
-    this.y = 180;
-    this.speed = 1;
+  constructor(x, y, direction, speed){
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
     this.c = color(100, 150, 200);
+    this.direction = direction;
   }
   move(){
-    this.x += 1;
-    //this.y += random(-this.speed, this.speed);
+    if(this.direction == 'x'){
+      this.x += 1;
+    }
+    else{
+      this.y += 1;
+    }
   }
   brake(){
     if(this.speed > 0)
     {
-      this.speed -= 0.3
+      this.speed -= 0.3;
     }
   }
   display(){
@@ -106,6 +113,6 @@ class Car{
   }
 }
 
-class Ambulance{
+class Ambulance extends Car{
 
 }
