@@ -1,11 +1,15 @@
 var x,y;
+var counter;
 //Matrix for randomizing initial states of the stoplight at each intersection
 var stopLightStatus =[[Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
                       [Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
                       [Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
                       [Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
                       [Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)]];
-var counter;
+
+var stopLightRightOrDown = [120,290,460,630,800];
+var stopLightLeftOrUp = [230,400,570,740,910];
+
 //Number of seconds to wait before switching times fps
 const seconds = 5*60;
 let car;
@@ -13,7 +17,6 @@ let car;
 function setup() {
   createCanvas(1040,1040);
   counter = seconds;
-  //Randomly generates initial states for each stop light
   frameRate(60);
   car = new Car();
 }
