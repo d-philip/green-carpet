@@ -17,7 +17,6 @@ let car;
 function setup() {
   createCanvas(1040,1040);
   counter = seconds;
-  //Randomly generates initial states for each stop light
   frameRate(60);
   car = new Car();
 }
@@ -92,7 +91,6 @@ class Car{
     this.c = color(100, 150, 200);
   }
   move(){
-
     this.x += 1;
     //this.y += random(-this.speed, this.speed);
   }
