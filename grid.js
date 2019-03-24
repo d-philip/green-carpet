@@ -10,8 +10,8 @@ var stopLightRightOrDown = [120,290,460,630,800];
 var stopLightLeftOrUp = [230,400,570,740,910];
 
 //Number of seconds to wait before switching times fps
-const seconds = 2*60;
-let car1, car2;
+const seconds = 5*60;
+let car1, car2, ambulance;
 
 var cars = [];
 
@@ -19,6 +19,8 @@ function setup() {
   createCanvas(1040,1040);
   counter = seconds;
   frameRate(60);
+
+  ambulance = new Ambulance(505, 60, 0, 2, 'y', 4);
 
   cars[0] = new Car(80, 180, 0, 0, 'x', 1);
   cars[1] = new Car(100, 350, 1, 0, 'x', 2);
@@ -75,6 +77,9 @@ function draw() {
     cars[i].display();
   }
 
+  //Draws Ambulance
+  ambulance.display();
+  ambulance.move();
 
   //car v car collision detection
   var blocked = false;
@@ -108,7 +113,7 @@ function draw() {
 
 }
 
-//Decides whether he light should be green or red
+//Decides whether the light should be green or red
 function chooseColor(i,j,pos){
   if(stopLightStatus[i][j] == pos){
       return true;
@@ -224,5 +229,44 @@ class Ambulance extends Car{
   constructor(x, y, row, col, direction, speed){
     super(x, y, row, col, direction, speed);
     this.c = color(225, 175, 100);
+  }
+
+  move(){
+    if(this.direction == 'x'){
+      if(this.multi<=4){
+        if(this.x>=130+(170*this.multi)){
+          if(stopLightStatus[this.multi][this.row]!=3){
+            //change light to green and others to red
+            stopLightStatus[this.multi][this.row]=3;
+            this.x += this.speed;
+            this.multi+=1;
+          }
+          else if(stopLightStatus[this.multi][this.row]==3){
+            this.x += this.speed;
+            this.multi+=1;
+          }
+        }
+        else{ this.x += this.speed;}
+      }
+      else{ this.x += this.speed;}
+    }
+    else if(this.direction == 'y'){
+      if(this.multi<=4){
+        if(this.y>=130+(170*this.multi)){
+          if(stopLightStatus[this.col][this.multi]!=0){
+            //change light to green and others to red
+            stopLightStatus[this.col][this.multi]=0;
+            this.y += this.speed;
+            this.multi+=1;
+          }
+          else if(stopLightStatus[this.col][this.multi]==0){
+            this.y += this.speed;
+            this.multi+=1;
+          }
+        }
+        else{ this.y += this.speed;}
+      }
+      else{ this.y += this.speed;}
+    }
   }
 }
