@@ -23,6 +23,8 @@ var cars = [];
 //Stores coords for ambulance to travel to
 var xCoord = [];
 var yCoord = [];
+xcnt = 0;
+ycnt = 0;
 
 //Counter for indexing into ambulance travel coord data
 coordCount = 0;
@@ -185,6 +187,8 @@ function mousePressed(){
     yCoord[coordCount] = mouseRow;
     xCoord[coordCount] = mouseCol;
     coordCount++;
+    xcnt++;
+    ycnt++;
   }
 }
 
@@ -274,40 +278,26 @@ class Ambulance extends Car{
   constructor(x, y, row, col, direction, speed){
     super(x, y, row, col, direction, speed);
     this.c = color(225, 175, 100);
-    this.distance_x;
-    this.distance_y;
   }
 
   move(){
-    if(xCoord.length >= 3 && yCoord.length >= 3){
-      // move car to desired x-coord
-      for(i = 0; i < xCoord.length; i++){
-        dest_x = 170+(170*i);
-        this.distance_x = dest_x - this.x;
-        while(this.distance_x != 0){
-          if(this.distance_x > 0){
-            this.x += this.speed;
-          }
-          else if(this.distance_x < 0){
-            this.x -= this.speed;
-          }
-          this.distance_x = dest_x - this.x;
+    if(xCoord.length != 0){
+      // move to desired x-coord
+      if((((xCoord[xcnt-1]*170)+170) - this.x) > 0){
+        this.x += this.speed;
+      }
+      else if((((xCoord[xcnt-1]*170)+170) - this.x) < 0){
+        this.x -= this.speed;
+      }
+      if(Math.abs(((xCoord[xcnt-1]*170)+170) - this.x) <= 2){
+        // move to desired y-coord
+        if((((yCoord[ycnt-1]*170)+170) - this.y) > 0){
+          this.y += this.speed;
+        }
+        else if((((yCoord[ycnt-1]*170)+170) - this.y) < 0){
+          this.y -= this.speed;
         }
       }
-      // move car to desired y-coord
-      // for(j = 0; j < yCoord.length; j++){
-      //   dest_y = 170+(170*1);
-      //   distance_y = dest_y - this.y;
-      //   while(distance_y != 0){
-      //     if(distance_y > 0){
-      //       this.y += this.speed;
-      //     }
-      //     else if(distance_y < 0){
-      //       this.y -= this.speed;
-      //     }
-      //     distance_y = yCoord[j] - this.y;
-      //   }
-      // }
     }
   }
 }
