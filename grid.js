@@ -7,13 +7,24 @@ var stopLightStatus =[[Math.floor(Math.random()*4),Math.floor(Math.random()*4),M
                       [Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)]];
 
 var stopLightRightOrDown = [120,290,460,630,800];
-var stopLightLeftOrUp = [230,400,570,740,910];
+//For determining which intersections the ambulance should travel through
+var pathArray =[[0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0]];
 
 //Number of seconds to wait before switching times fps
 const seconds = 5*60;
 let car1, car2, ambulance;
 
 var cars = [];
+
+//Stores coords for ambulance to travel to
+var xCoord = [];
+var yCoord = [];
+//Counter for indexing into ambulance travel coord data
+coordCount = 0;
 
 function setup() {
   createCanvas(1040,1040);
@@ -51,6 +62,16 @@ function draw() {
   for(var i = 0; i < 6; i++){
     for(var j = 0; j < 6; j++){
       rect(170*i+30 ,170*j+30, 120,120);
+    }
+  }
+
+  //Enables clicked intersections
+  for(var i = 0; i < 5; i++){
+    for(var j = 0; j < 5; j++){
+      if(pathArray[i][j] == 1){
+        fill(255,215,0);
+        rect(150+i*170,150 + j* 170,50,50);
+      }
     }
   }
 
@@ -269,4 +290,29 @@ class Ambulance extends Car{
       else{ this.y += this.speed;}
     }
   }
+}
+
+
+function mousePressed(){
+  if(mouseX > 150 && mouseX < 200) mouseCol = 0;
+  else if(mouseX > 320  && mouseX < 370) mouseCol = 1;
+  else if(mouseX > 490  && mouseX < 540) mouseCol = 2;
+  else if(mouseX > 660  && mouseX < 710) mouseCol = 3;
+  else if(mouseX > 830  && mouseX < 880) mouseCol = 4;
+  else mouseCol = -1;
+
+  if(mouseY > 150 && mouseY < 200) mouseRow = 0;
+  else if(mouseY > 320  && mouseY < 370) mouseRow = 1;
+  else if(mouseY > 490  && mouseY < 540) mouseRow = 2;
+  else if(mouseY > 660  && mouseY < 710) mouseRow = 3;
+  else if(mouseY > 830  && mouseY < 880) mouseRow = 4;
+  else mouseRow = -1;
+
+  if(mouseRow != -1 && mouseCol != -1){
+    pathArray[mouseCol][mouseRow] = 1;
+    xCoord[coordCount] = mouseRow;
+    xCoord[coordCount] = mouseCol;
+    coordCount++;
+  }
+
 }
