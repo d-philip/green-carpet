@@ -1,5 +1,3 @@
-var x,y;
-var multi;
 var counter;
 //Matrix for randomizing initial states of the stoplight at each intersection
 var stopLightStatus =[[Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
@@ -21,18 +19,17 @@ function setup() {
   createCanvas(1040,1040);
   counter = seconds;
   frameRate(60);
-  multi = 0;
 
-  cars[0] = new Car(100, 180, 'x', 1);
-  cars[1] = new Car(100, 350, 'x', 2);
-  cars[2] = new Car(100, 520, 'x', 1);
-  cars[3] = new Car(100, 690, 'x', 3);
-  cars[4] = new Car(100, 860, 'x', 1);
-  cars[5] = new Car(180, 100, 'y', 1);
-  cars[6] = new Car(350, 100, 'y', 3);
-  cars[7] = new Car(520, 100, 'y', 2);
-  cars[8] = new Car(690, 100, 'y', 2);
-  cars[9] = new Car(860, 100, 'y', 1);
+  cars[0] = new Car(100, 180, 0, 0, 'x', 1);
+  cars[1] = new Car(100, 350, 1, 0, 'x', 2);
+  cars[2] = new Car(100, 520, 2, 0, 'x', 1);
+  cars[3] = new Car(100, 690, 3, 0, 'x', 3);
+  cars[4] = new Car(100, 860, 4, 0, 'x', 1);
+  cars[5] = new Car(180, 100, 0, 0, 'y', 1);
+  cars[6] = new Car(350, 100, 0, 1, 'y', 3);
+  cars[7] = new Car(520, 100, 0, 2, 'y', 2);
+  cars[8] = new Car(690, 100, 0, 3, 'y', 2);
+  cars[9] = new Car(860, 100, 0, 4, 'y', 1);
 }
 
 function draw() {
@@ -135,9 +132,11 @@ function lookahead(car1,car2){
 
 
 class Car{
-  constructor(x, y, direction, speed){
+  constructor(x, y, row, col, direction, speed){
     this.x = x;
     this.y = y;
+    this.row = row;
+    this.col = col;
     this.multi=0;
     this.speed = speed;
     this.c = color(100, 150, 200);
@@ -147,26 +146,28 @@ class Car{
   move(){
 
   if(this.direction == 'x'){
-    if(this.multi<=6){
+    if(this.multi<=4){
       if(this.x>=130+(170*this.multi)){
-        if(stopLightStatus[this.multi][0]==3){
+        if(stopLightStatus[this.multi][this.row]==3){
           this.x += this.speed;
           this.multi+=1;
         }
       }
-    else{ this.x += this.speed;}
+      else{ this.x += this.speed;}
     }
+    else{ this.x += this.speed;}
   }
-   if(this.direction == 'y'){
+  if(this.direction == 'y'){
     if(this.multi<=4){
       if(this.y>=130+(170*this.multi)){
-        if(stopLightStatus[0][this.multi]==0){
+        if(stopLightStatus[this.col][this.multi]==0){
           this.y += this.speed;
           this.multi+=1;
         }
       }
-      else{ this.y += this.speed;}
+        else{ this.y += this.speed;}
     }
+    else{ this.y += this.speed;}
   }
 }
 
