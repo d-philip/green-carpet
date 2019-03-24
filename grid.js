@@ -20,26 +20,52 @@ function setup() {
   counter = seconds;
   frameRate(60);
 
+  //positive speed cars
   cars[0] = new Car(80, 180, 0, 0, 'x', 1);
   cars[1] = new Car(100, 350, 1, 0, 'x', 2);
   cars[2] = new Car(100, 520, 2, 0, 'x', 1);
   cars[3] = new Car(80, 690, 3, 0, 'x', 3);
   cars[4] = new Car(80, 860, 4, 0, 'x', 1);
-  cars[5] = new Car(180, 100, 0, 0, 'y', 1);
-  cars[6] = new Car(350, 80, 0, 1, 'y', 3);
-  cars[7] = new Car(520, 80, 0, 2, 'y', 2);
-  cars[8] = new Car(690, 100, 0, 3, 'y', 2);
-  cars[9] = new Car(860, 120, 0, 4, 'y', 1);
+  cars[5] = new Car(180 - 20, 100, 0, 0, 'y', 1);
+  cars[6] = new Car(350 - 20, 80, 0, 1, 'y', 3);
+  cars[7] = new Car(520 - 20, 80, 0, 2, 'y', 2);
+  cars[8] = new Car(690 - 20, 100, 0, 3, 'y', 2);
+  cars[9] = new Car(860 - 20, 120, 0, 4, 'y', 1);
   cars[10] = new Car(100, 180, 0, 0, 'x', 2);
   cars[11] = new Car(80, 350, 1, 0, 'x', 3);
   cars[12] = new Car(100, 350, 1, 0, 'x', 2);
   cars[13] = new Car(100, 690, 3, 0, 'x', 1);
   cars[14] = new Car(100, 860, 4, 0, 'x', 2);
-  cars[15] = new Car(180, 100, 0, 0, 'y', 3);
-  cars[16] = new Car(350, 100, 0, 1, 'y', 2);
-  cars[17] = new Car(520, 100, 0, 2, 'y', 3);
-  cars[18] = new Car(860, 80, 0, 4, 'y', 3);
-  cars[19] = new Car(860, 100, 0, 4, 'y', 2);
+  cars[15] = new Car(180 - 20, 100, 0, 0, 'y', 3);
+  cars[16] = new Car(350 - 20, 100, 0, 1, 'y', 2);
+  cars[17] = new Car(520 - 20, 100, 0, 2, 'y', 3);
+  cars[18] = new Car(860 - 20, 80, 0, 4, 'y', 3);
+  cars[19] = new Car(860 - 20, 100, 0, 4, 'y', 2);
+
+  //negative speed cars
+  cars[20] = new Car(width - 80, height - 180 - 20, 0, 0, 'x', -1);
+  cars[21] = new Car(width - 100, height - 350 - 20, 1, 0, 'x', -3);
+  cars[22] = new Car(width - 100, height - 520 - 20, 2, 0, 'x', -1);
+  cars[23] = new Car(width - 80, height - 690 - 20, 3, 0, 'x', -1);
+  cars[24] = new Car(width - 80, height - 860 - 20, 4, 0, 'x', -2);
+
+  cars[25] = new Car(width - 180, height - 100, 0, 0, 'y', -1);
+  cars[26] = new Car(width - 350, height - 80, 0, 1, 'y', -2);
+  cars[27] = new Car(width - 520, height - 80, 0, 2, 'y', -3);
+  cars[28] = new Car(width - 690, height - 100, 0, 3, 'y', -2);
+  cars[29] = new Car(width - 860, height - 120, 0, 4, 'y', -1);
+
+  cars[30] = new Car(width - 100, height - 180 - 20, 0, 0, 'x', -3);
+  cars[31] = new Car(width - 80, height - 350 - 20, 1, 0, 'x', -3);
+  cars[32] = new Car(width - 100, height - 350 - 20, 1, 0, 'x', -1);
+  cars[33] = new Car(width - 100, height - 690 - 20, 3, 0, 'x', -2);
+  cars[34] = new Car(width - 100, height - 860 - 20, 4, 0, 'x', -2);
+
+  cars[35] = new Car(width - 180, height - 100, 0, 0, 'y', -1);
+  cars[36] = new Car(width - 350, height - 100, 0, 1, 'y', -2);
+  cars[37] = new Car(width - 520, height - 100, 0, 2, 'y', -1);
+  cars[38] = new Car(width - 860, height - 80, 0, 4, 'y', -3);
+  cars[39] = new Car(width - 860, height - 100, 0, 4, 'y', -3);
 }
 
 function draw() {
@@ -152,24 +178,25 @@ class Car{
 
   move(){
   //looping around edges and randomizing speed
-  if(this.x >= width){
-    this.x = 0;
+  if(this.x >= width-20){
+    this.x = 30;
     this.multi = 0;
     this.speed = Math.floor(Math.random()*3);
-  }else if(this.x <= 0){
-    this.x = width;
-    this.multi = 0;
-    this.speed = -Math.floor(Math.random()*3);
-  }else if(this.y >= width){
-    this.y = 0;
+  }else if(this.x < 0+20){
+    this.x = width-30;
+    this.multi = 4;
+    this.speed = -(Math.floor(Math.random()*3));
+  }else if(this.y >= height-20){
+    this.y = 30;
     this.multi = 0;
     this.speed = Math.floor(Math.random()*3);
-  }else if(this.y <= 0){
-    this.y = width;
-    this.multi = 0;
-    this.speed = -Math.floor(Math.random()*3);
+  }else if(this.y < 0+20){
+    this.y = height-30;
+    this.multi = 4;
+    this.speed = -(Math.floor(Math.random()*3));
   }
 
+if(this.speed > 0){
   if(this.direction == 'x'){
     if(this.multi<=4){
       if(this.x>=130+(170*this.multi)){
@@ -194,6 +221,33 @@ class Car{
     }
     else{ this.y += this.speed;}
   }
+}
+else{
+  if(this.direction == 'x'){
+    if(this.multi>=0){
+      if(this.x>=width-130-(170*this.multi)){
+        if(stopLightStatus[this.multi][this.row]==1){
+          this.x += this.speed;
+          this.multi-=1;
+        }
+      }
+      else{ this.x += this.speed;}
+    }
+    else{ this.x += this.speed;}
+  }
+  if(this.direction == 'y'){
+    if(this.multi>=0){
+      if(this.y>=height-130+(170*this.multi)){
+        if(stopLightStatus[this.col][this.multi]==2){
+          this.y += this.speed;
+          this.multi-=1;
+        }
+      }
+        else{ this.y += this.speed;}
+    }
+    else{ this.y += this.speed;}
+  }
+}
 }
 
   display(){
