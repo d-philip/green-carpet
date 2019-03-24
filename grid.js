@@ -12,7 +12,7 @@ var stopLightRightOrDown = [120,290,460,630,800];
 var stopLightLeftOrUp = [230,400,570,740,910];
 
 //Number of seconds to wait before switching times fps
-const seconds = 5*60;
+const seconds = 1*60;
 let car1, car2;
 
 var cars = [];
@@ -147,15 +147,16 @@ class Car{
   move(){
 
   if(this.direction == 'x'){
-    if(this.multi<=6){
+    if(this.multi<=4){
       if(this.x>=130+(170*this.multi)){
         if(stopLightStatus[this.multi][0]==3){
           this.x += this.speed;
           this.multi+=1;
         }
       }
-    else{ this.x += this.speed;}
+      else{ this.x += this.speed;}
     }
+    else{this.x += this.speed;}
   }
    if(this.direction == 'y'){
     if(this.multi<=4){
@@ -167,6 +168,7 @@ class Car{
       }
       else{ this.y += this.speed;}
     }
+    else{this.y += this.speed;}
   }
 }
 
