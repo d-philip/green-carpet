@@ -34,8 +34,8 @@ function setup() {
 
 function draw() {
   //Draws background and buildings
-  background(80);
-  fill(255);
+  background(60);
+  fill(220);
   for(var i = 0; i < 6; i++){
     for(var j = 0; j < 6; j++){
       rect(170*i+30 ,170*j+30, 120,120);
@@ -136,7 +136,7 @@ class Car{
     this.col = col;
     this.multi=0;
     this.speed = speed;
-    this.c = color(10, 150, 225);
+    this.c = color(153, 204, 225);
     this.direction = direction;
   }
 
