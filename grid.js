@@ -279,9 +279,35 @@ class Ambulance extends Car{
   }
 
   move(){
-    for(i = 0; i < yCoord.length; i++){
-
+    if(xCoord.length >= 3 && yCoord.length >= 3){
+      // move car to desired x-coord
+      for(i = 0; i < xCoord.length; i++){
+        dest_x = 170+(170*i);
+        this.distance_x = dest_x - this.x;
+        while(this.distance_x != 0){
+          if(this.distance_x > 0){
+            this.x += this.speed;
+          }
+          else if(this.distance_x < 0){
+            this.x -= this.speed;
+          }
+          this.distance_x = dest_x - this.x;
+        }
+      }
+      // move car to desired y-coord
+      // for(j = 0; j < yCoord.length; j++){
+      //   dest_y = 170+(170*1);
+      //   distance_y = dest_y - this.y;
+      //   while(distance_y != 0){
+      //     if(distance_y > 0){
+      //       this.y += this.speed;
+      //     }
+      //     else if(distance_y < 0){
+      //       this.y -= this.speed;
+      //     }
+      //     distance_y = yCoord[j] - this.y;
+      //   }
+      // }
     }
   }
-
 }
