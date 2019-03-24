@@ -10,7 +10,7 @@ var stopLightRightOrDown = [120,290,460,630,800];
 var stopLightLeftOrUp = [230,400,570,740,910];
 
 //Number of seconds to wait before switching times fps
-const seconds = 5*60;
+const seconds = 2*60;
 let car1, car2;
 
 var cars = [];
@@ -108,7 +108,6 @@ function chooseColor(i,j,pos){
   }
 }
 
-
 function lookahead(car1,car2){
   if(car1.speed >= 0 && car2.speed >= 0){
     if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x < car2.x && (car2.x - car1.x) < 20)){
@@ -129,8 +128,6 @@ function lookahead(car1,car2){
   return false;
 }
 
-
-
 class Car{
   constructor(x, y, row, col, direction, speed){
     this.x = x;
@@ -139,7 +136,7 @@ class Car{
     this.col = col;
     this.multi=0;
     this.speed = speed;
-    this.c = color(100, 150, 200);
+    this.c = color(10, 150, 225);
     this.direction = direction;
   }
 
@@ -171,13 +168,6 @@ class Car{
   }
 }
 
-  brake(){
-    if(this.speed > 0)
-    {
-      this.speed -= 0.3;
-    }
-  }
-
   display(){
     fill(this.c);
     rect(this.x, this.y, 10, 10);
@@ -203,5 +193,8 @@ class Car{
 }
 
 class Ambulance extends Car{
-
+  constructor(x, y, row, col, direction, speed){
+    super(x, y, row, col, direction, speed);
+    this.c = color(225, 175, 100);
+  }
 }
