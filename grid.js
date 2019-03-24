@@ -31,7 +31,7 @@ function setup() {
   counter = seconds;
   frameRate(60);
 
-  ambulance = new Ambulance(505, 60, 0, 2, 'y', 4);
+  ambulance = new Ambulance(505, 60, 0, 2, 'y', 3);
 
   cars[0] = new Car(80, 180, 0, 0, 'x', 1);
   cars[1] = new Car(100, 350, 1, 0, 'x', 2);
@@ -70,7 +70,7 @@ function draw() {
     for(var j = 0; j < 5; j++){
       if(pathArray[i][j] == 1){
         fill(255,215,0);
-        rect(150+i*170,150 + j* 170,50,50);
+        rect(150+i  *170,150 + j* 170,50,50);
       }
     }
   }
@@ -310,7 +310,7 @@ function mousePressed(){
 
   if(mouseRow != -1 && mouseCol != -1){
     pathArray[mouseCol][mouseRow] = 1;
-    xCoord[coordCount] = mouseRow;
+    yCoord[coordCount] = mouseRow;
     xCoord[coordCount] = mouseCol;
     coordCount++;
   }
