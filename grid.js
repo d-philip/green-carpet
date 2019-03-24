@@ -7,57 +7,67 @@ var stopLightStatus =[[Math.floor(Math.random()*4),Math.floor(Math.random()*4),M
                       [Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)]];
 
 var stopLightRightOrDown = [120,290,460,630,800];
-//For determining which intersections the ambulance should travel through
-var pathArray =[[0,0,0,0,0],
-                [0,0,0,0,0],
-                [0,0,0,0,0],
-                [0,0,0,0,0],
-                [0,0,0,0,0]];
+var stopLightLeftOrUp = [230,400,570,740,910];
 
 //Number of seconds to wait before switching times fps
-const seconds = 5*60;
-let car1, car2, ambulance;
+const seconds = 4*60;
+let car1, car2;
 
 var cars = [];
-
-//Stores coords for ambulance to travel to
-var xCoord = [];
-var yCoord = [];
-xcnt = 0;
-ycnt = 0;
-
-
-//Counter for indexing into ambulance travel coord data
-coordCount = 0;
-ambulanceCount = 0;
 
 function setup() {
   createCanvas(1040,1040);
   counter = seconds;
   frameRate(60);
 
-  ambulance = new Ambulance(170, 170, 0, 2, 'y', 4);
+  ambulance = new Ambulance(50, 170, 0, 0, 'y', 1.5);
 
-  cars[0] = new Car(80, 180, 0, 0, 'x', 1);
-  cars[1] = new Car(100, 350, 1, 0, 'x', 2);
-  cars[2] = new Car(100, 520, 2, 0, 'x', 1);
-  cars[3] = new Car(80, 690, 3, 0, 'x', 3);
-  cars[4] = new Car(80, 860, 4, 0, 'x', 1);
-  cars[5] = new Car(180, 100, 0, 0, 'y', 1);
-  cars[6] = new Car(350, 80, 0, 1, 'y', 3);
-  cars[7] = new Car(520, 80, 0, 2, 'y', 2);
-  cars[8] = new Car(690, 100, 0, 3, 'y', 2);
-  cars[9] = new Car(860, 120, 0, 4, 'y', 1);
-  cars[10] = new Car(100, 180, 0, 0, 'x', 2);
-  cars[11] = new Car(80, 350, 1, 0, 'x', 3);
-  cars[12] = new Car(100, 350, 1, 0, 'x', 2);
-  cars[13] = new Car(100, 690, 3, 0, 'x', 1);
-  cars[14] = new Car(100, 860, 4, 0, 'x', 2);
-  cars[15] = new Car(180, 100, 0, 0, 'y', 3);
-  cars[16] = new Car(350, 100, 0, 1, 'y', 2);
-  cars[17] = new Car(520, 100, 0, 2, 'y', 3);
-  cars[18] = new Car(860, 80, 0, 4, 'y', 3);
-  cars[19] = new Car(860, 100, 0, 4, 'y', 2);
+  //positive speed cars
+  cars[0] = new Car(130, 180, 0, 0, 'x', 1);
+  cars[1] = new Car(130, 350, 1, 0, 'x', 1);
+  cars[2] = new Car(130, 520, 2, 0, 'x', 1);
+  cars[3] = new Car(130, 690, 3, 0, 'x', 1);
+  cars[4] = new Car(130, 860, 4, 0, 'x', 1);
+  cars[5] = new Car(180 - 20, 100, 0, 0, 'y', 1);
+  cars[6] = new Car(350 - 20, 80, 0, 1, 'y', 1);
+  cars[7] = new Car(520 - 20, 80, 0, 2, 'y', 1);
+  cars[8] = new Car(690 - 20, 100, 0, 3, 'y', 1);
+  cars[9] = new Car(860 - 20, 120, 0, 4, 'y', 1);
+  cars[10] = new Car(130, 180, 0, 0, 'x', 1);
+  cars[11] = new Car(130, 350, 1, 0, 'x', 1);
+  cars[12] = new Car(130, 350, 1, 0, 'x', 1);
+  cars[13] = new Car(130, 690, 3, 0, 'x', 1);
+  cars[14] = new Car(130, 860, 4, 0, 'x', 1);
+  cars[15] = new Car(180 - 20, 100, 0, 0, 'y', 1);
+  cars[16] = new Car(350 - 20, 100, 0, 1, 'y', 1);
+  cars[17] = new Car(520 - 20, 100, 0, 2, 'y', 1);
+  cars[18] = new Car(860 - 20, 80, 0, 4, 'y', 1);
+  cars[19] = new Car(860 - 20, 100, 0, 4, 'y', 1);
+
+  //negative speed cars
+  cars[20] = new Car(950, height - 180 - 20, 0, 0, 'x', -1);
+  cars[21] = new Car(950, height - 350 - 20, 1, 0, 'x', -1);
+  cars[22] = new Car(950, height - 520 - 20, 2, 0, 'x', -1);
+  cars[23] = new Car(950, height - 690 - 20, 3, 0, 'x', -1);
+  cars[24] = new Car(950, height - 860 - 20, 4, 0, 'x', -1);
+
+  cars[25] = new Car(width - 180, 950-20, 0, 0, 'y', -1);
+  cars[26] = new Car(width - 350, 950-20, 0, 1, 'y', -1);
+  cars[27] = new Car(width - 520, 950-20, 0, 2, 'y', -1);
+  cars[28] = new Car(width - 690, 950-20, 0, 3, 'y', -1);
+  cars[29] = new Car(width - 860, 950-20, 0, 4, 'y', -1);
+
+  cars[30] = new Car(950, height - 180 - 20, 0, 0, 'x', -1);
+  cars[31] = new Car(950, height - 350 - 20, 1, 0, 'x', -1);
+  cars[32] = new Car(950, height - 350 - 20, 1, 0, 'x', -1);
+  cars[33] = new Car(950, height - 690 - 20, 3, 0, 'x', -1);
+  cars[34] = new Car(950, height - 860 - 20, 4, 0, 'x', -1);
+
+  cars[35] = new Car(width - 180, 950, 0, 0, 'y', -1);
+  cars[36] = new Car(width - 350, 950, 0, 1, 'y', -1);
+  cars[37] = new Car(width - 520, 950, 0, 2, 'y', -1);
+  cars[38] = new Car(width - 860, 950-40, 0, 4, 'y', -1);
+  cars[39] = new Car(width - 860, 950, 0, 4, 'y', -1);
 }
 
 function draw() {
@@ -70,15 +80,8 @@ function draw() {
     }
   }
 
-  //Enables clicked intersections
-  for(var i = 0; i < 5; i++){
-    for(var j = 0; j < 5; j++){
-      if(pathArray[i][j] == 1){
-        fill(255,215,0);
-        rect(150+i  *170,150 + j* 170,50,50);
-      }
-    }
-  }
+  ambulance.display();
+  ambulance.move();
 
   //Draws stoplights
   for(var i = 0; i < 5; i++){
@@ -103,9 +106,7 @@ function draw() {
     cars[i].display();
   }
 
-  //Draws Ambulance
-  ambulance.display();
-  ambulance.move();
+
 
   //car v car collision detection
   var blocked = false;
@@ -139,7 +140,7 @@ function draw() {
 
 }
 
-//Decides whether the light should be green or red
+//Decides whether he light should be green or red
 function chooseColor(i,j,pos){
   if(stopLightStatus[i][j] == pos){
       return true;
@@ -169,31 +170,6 @@ function lookahead(car1,car2){ //Car1 is the "chase car", whose position and dir
   return false;
 }
 
-function mousePressed(){
-  if(mouseX > 150 && mouseX < 200) mouseCol = 0;
-  else if(mouseX > 320  && mouseX < 370) mouseCol = 1;
-  else if(mouseX > 490  && mouseX < 540) mouseCol = 2;
-  else if(mouseX > 660  && mouseX < 710) mouseCol = 3;
-  else if(mouseX > 830  && mouseX < 880) mouseCol = 4;
-  else mouseCol = -1;
-
-  if(mouseY > 150 && mouseY < 200) mouseRow = 0;
-  else if(mouseY > 320  && mouseY < 370) mouseRow = 1;
-  else if(mouseY > 490  && mouseY < 540) mouseRow = 2;
-  else if(mouseY > 660  && mouseY < 710) mouseRow = 3;
-  else if(mouseY > 830  && mouseY < 880) mouseRow = 4;
-  else mouseRow = -1;
-
-  if(mouseRow != -1 && mouseCol != -1){
-    pathArray[mouseCol][mouseRow] = 1;
-    yCoord[coordCount] = mouseRow;
-    xCoord[coordCount] = mouseCol;
-    coordCount++;
-    xcnt++;
-    ycnt++;
-  }
-}
-
 class Car{
   constructor(x, y, row, col, direction, speed){
     this.x = x;
@@ -208,24 +184,27 @@ class Car{
 
   move(){
   //looping around edges and randomizing speed
-  if(this.x >= width){
-    this.x = 0;
+
+  if(this.x >= width-20){
+    this.x = 90;
     this.multi = 0;
-    this.speed = Math.floor(Math.random()*3);
-  }else if(this.x <= 0){
-    this.x = width;
+    this.speed = Math.floor(Math.random()*3)+1;
+  }else if(this.x < 0+20){
+    this.x = 930;
     this.multi = 0;
-    this.speed = -Math.floor(Math.random()*3);
-  }else if(this.y >= width){
-    this.y = 0;
+    this.speed = -y
+  }else if(this.y >= height-20){
+    this.y = 90;
     this.multi = 0;
-    this.speed = Math.floor(Math.random()*3);
-  }else if(this.y <= 0){
-    this.y = width;
+    this.speed = Math.floor(Math.random()*3)+1;
+  }else if(this.y < 0+20){
+    this.y = 930;
     this.multi = 0;
-    this.speed = -Math.floor(Math.random()*3);
+    this.speed = -(Math.floor(Math.random()*3))-1;
   }
 
+//
+if(this.speed > 0){
   if(this.direction == 'x'){
     if(this.multi<=4){
       if(this.x>=130+(170*this.multi)){
@@ -250,6 +229,33 @@ class Car{
     }
     else{ this.y += this.speed;}
   }
+}
+else{
+  if(this.direction == 'x'){
+    if(this.multi<=4){
+      if(this.x<=890-(170*this.multi)){
+        if(stopLightStatus[4-this.multi][4-this.row]==1){
+          this.x += this.speed;
+          this.multi+=1;
+        }
+      }
+      else{ this.x += this.speed;}
+    }
+    else{ this.x += this.speed;}
+  }
+  if(this.direction == 'y'){
+    if(this.multi<=4){
+      if(this.y<=890-(170*this.multi)){
+        if(stopLightStatus[4-this.col][4-this.multi]==2){
+          this.y += this.speed;
+          this.multi+=1;
+        }
+      }
+        else{ this.y += this.speed;}
+    }
+    else{ this.y += this.speed;}
+  }
+}
 }
 
   display(){
@@ -282,64 +288,36 @@ class Ambulance extends Car{
     this.c = color(225, 175, 100);
   }
 
-  findRow(){
-    if(this.y > 150 && this.y  < 200) row = 0;
-    else if(this.y > 320  && this.y < 370) row = 1;
-    else if(this.y > 490  && this.y < 540) row = 2;
-    else if(this.y > 660  && this.y < 710) row = 3;
-    else if(this.y > 830  && this.y < 880) row = 4;
-    return row;
-  }
-
-  findCol(){
-    if(this.x > 150 && this.x  < 200) col = 0;
-    else if(this.x > 320  && this.x < 370) col = 1;
-    else if(this.x > 490  && this.x < 540) col = 2;
-    else if(this.x > 660  && this.x < 710) col = 3;
-    else if(this.x > 830  && this.x < 880) col = 4;
-    return col;
-  }
-
-  lightCheck(){
-    if(this.x - this.x > 0){ // -x direction
-      stopLightStatus[this.findRow()][this.findCol()] = 1;
-    }
-  //   else if (this.x - this.x < 0){ // +x direction
-  //     stopLightStatus[this.findRow()]][this.findCol()] = 3;
-  //   }
-  //   else if(this.y - this.y > 0){ // -y direction);
-  //     stopLightStatus[this.findRow()]][this.findCol()] = 0;
-  //   }
-  //   else if(this.y - this.y < 0){ / /
-  //     stopLightStatus[this.findRow()]][this.findCol()] = 4;
-  //   }
-  }
-
   move(){
-
-    if(xCoord.length != 0){
-      // move to desired x-coord
-      if((((xCoord[xcnt-1]*170)+170) - this.x) > 0){
-        this.x += this.speed;
-        this.lightCheck();
+    if(this.x <= width){
+      this.x += this.speed;
+      if(this.x < 200){
+        stopLightStatus [0][this.row] = 3;
+        stopLightStatus [1][this.row] = 3;
+        stopLightStatus [2][this.row] = 3;
       }
-      else if((((xCoord[xcnt-1]*170)+170) - this.x) < 0){
-        this.x -= this.speed;
-        this.lightCheck();
+      else if(200 < this.x && this.x < 370){
+        stopLightStatus [1][this.row] = 3;
+        stopLightStatus [2][this.row] = 3;
+        stopLightStatus [3][this.row] = 3;
       }
-      if(Math.abs(((xCoord[xcnt-1]*170)+170) - this.x) <= 2){
-      //   // move to desired y-coord
-        if((((yCoord[ycnt-1]*170)+170) - this.y) > 0){
-          this.y += this.speed;
-          this.lightCheck();
-        }
-        else if((((yCoord[ycnt-1]*170)+170) - this.y) < 0){
-          this.y -= this.speed;
-          this.lightCheck();
-        }
-        if(Math.abs(((yCoord[ycnt-1]*170)+170) - this.y) <= 2){
-        }
+      else if(370 < this.x && this.x < 540){
+        stopLightStatus [2][this.row] = 3;
+        stopLightStatus [3][this.row] = 3;
+        stopLightStatus [4][this.row] = 3;
       }
+      else if(540 < this.x && this.x < 710){
+        stopLightStatus [3][this.row] = 3;
+        stopLightStatus [4][this.row] = 3;
+      }
+      else if(710 < this.x && this.x < 880){
+        stopLightStatus [4][this.row] = 3;
+      }
+    }
+    else{
+      this.x = 50;
+      this.row = Math.floor(Math.random()*4);
+      this.y = (this.row+1) * 170;
     }
   }
 }
