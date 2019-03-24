@@ -253,44 +253,80 @@ class Ambulance extends Car{
   }
 
   move(){
-    if(this.direction == 'x'){
-      if(this.multi<=4){
-        if(this.x>=130+(170*this.multi)){
-          if(stopLightStatus[this.multi][this.row]!=3){
-            //change light to green and others to red
-            stopLightStatus[this.multi][this.row]=3;
-            this.x += this.speed;
-            this.multi+=1;
-          }
-          else if(stopLightStatus[this.multi][this.row]==3){
-            this.x += this.speed;
-            this.multi+=1;
-          }
-        }
-        else{ this.x += this.speed;}
+    coordCount++;
+
+    //Finds the direction that the ambulance will approach the next light from
+    if(xCoord.length() - coordCount > 2){
+      //Moving left
+      if(xCoord[coordCount + 1] - xCoord[coordCount + 2] == -1){
+        futureDir3 = 1;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir3;
       }
-      else{ this.x += this.speed;}
-    }
-    else if(this.direction == 'y'){
-      if(this.multi<=4){
-        if(this.y>=130+(170*this.multi)){
-          if(stopLightStatus[this.col][this.multi]!=0){
-            //change light to green and others to red
-            stopLightStatus[this.col][this.multi]=0;
-            this.y += this.speed;
-            this.multi+=1;
-          }
-          else if(stopLightStatus[this.col][this.multi]==0){
-            this.y += this.speed;
-            this.multi+=1;
-          }
-        }
-        else{ this.y += this.speed;}
+      //Moving right
+      else if(xCoord[coordCount + 1] - xCoord[coordCount + 2] == 1){
+        futureDir3 = 3;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir3;
       }
-      else{ this.y += this.speed;}
+      //Moving down
+      else if(yCoord[coordCount + 1] - yCoord[coordCount + 2] == -1){
+        futureDir3 = 0;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir3;
+      }
+      //Moving up
+      else{
+        futureDir3 = 2;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir3;
+      }
     }
+
+    //Determines the direction that the ambulance will aproach the light two in the future from
+    if(xCoord.length() - coordCount > 1){
+      //Moving left
+      if(xCoord[coordCount] - xCoord[coordCount + 1] == -1){
+        futureDir2 = 1;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir2;
+      }
+      //Moving right
+      else if(xCoord[coordCount] - xCoord[coordCount + 1] == 1){
+        futureDir2 = 3;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir2;
+      }
+      //Moving down
+      else if(yCoord[coordCount] - yCoord[coordCount + 1] == -1){
+        futureDir2 = 0;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir2;
+      }
+      //Moving up
+      else{
+          futureDir2 = 2;
+          stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir2;
+      }
+    }
+    //Finds the direction that the ambulance will approach the next light from
+    if(xCoord.length() - coordCount > 0){
+      //Moving left
+      if(xCoord[coordCount - 1] - xCoord[coordCount] == -1){
+        futureDir1 = 1;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir1;
+      }
+      //Moving right
+      else if(xCoord[coordCount - 1] - xCoord[coordCount] == 1){
+        futureDir1 = 3;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir1;
+      }
+      //Moving down
+      else if(yCoord[coordCount - 1] - yCoord[coordCount] == -1){
+        futureDir1 = 0;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir1;
+      }
+      //Moving up
+      else{
+        futureDir1 = 2;
+        stopLightStatus[xCoord[coordCount]][yCoord[coordCount]] = futureDir1;
+      }
+    }
+
   }
-}
 
 
 function mousePressed(){
