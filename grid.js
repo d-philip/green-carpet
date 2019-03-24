@@ -23,6 +23,7 @@ var cars = [];
 //Stores coords for ambulance to travel to
 var xCoord = [];
 var yCoord = [];
+
 //Counter for indexing into ambulance travel coord data
 coordCount = 0;
 
@@ -31,7 +32,7 @@ function setup() {
   counter = seconds;
   frameRate(60);
 
-  ambulance = new Ambulance(505, 60, 0, 2, 'y', 3);
+  ambulance = new Ambulance(170, 170, 0, 2, 'y', 4);
 
   cars[0] = new Car(80, 180, 0, 0, 'x', 1);
   cars[1] = new Car(100, 350, 1, 0, 'x', 2);
@@ -164,6 +165,29 @@ function lookahead(car1,car2){ //Car1 is the "chase car", whose position and dir
   return false;
 }
 
+function mousePressed(){
+  if(mouseX > 150 && mouseX < 200) mouseCol = 0;
+  else if(mouseX > 320  && mouseX < 370) mouseCol = 1;
+  else if(mouseX > 490  && mouseX < 540) mouseCol = 2;
+  else if(mouseX > 660  && mouseX < 710) mouseCol = 3;
+  else if(mouseX > 830  && mouseX < 880) mouseCol = 4;
+  else mouseCol = -1;
+
+  if(mouseY > 150 && mouseY < 200) mouseRow = 0;
+  else if(mouseY > 320  && mouseY < 370) mouseRow = 1;
+  else if(mouseY > 490  && mouseY < 540) mouseRow = 2;
+  else if(mouseY > 660  && mouseY < 710) mouseRow = 3;
+  else if(mouseY > 830  && mouseY < 880) mouseRow = 4;
+  else mouseRow = -1;
+
+  if(mouseRow != -1 && mouseCol != -1){
+    pathArray[mouseCol][mouseRow] = 1;
+    yCoord[coordCount] = mouseRow;
+    xCoord[coordCount] = mouseCol;
+    coordCount++;
+  }
+}
+
 class Car{
   constructor(x, y, row, col, direction, speed){
     this.x = x;
@@ -250,69 +274,14 @@ class Ambulance extends Car{
   constructor(x, y, row, col, direction, speed){
     super(x, y, row, col, direction, speed);
     this.c = color(225, 175, 100);
+    this.distance_x;
+    this.distance_y;
   }
 
   move(){
-    if(this.direction == 'x'){
-      if(this.multi<=4){
-        if(this.x>=130+(170*this.multi)){
-          if(stopLightStatus[this.multi][this.row]!=3){
-            //change light to green and others to red
-            stopLightStatus[this.multi][this.row]=3;
-            this.x += this.speed;
-            this.multi+=1;
-          }
-          else if(stopLightStatus[this.multi][this.row]==3){
-            this.x += this.speed;
-            this.multi+=1;
-          }
-        }
-        else{ this.x += this.speed;}
-      }
-      else{ this.x += this.speed;}
+    for(i = 0; i < yCoord.length; i++){
+
     }
-    else if(this.direction == 'y'){
-      if(this.multi<=4){
-        if(this.y>=130+(170*this.multi)){
-          if(stopLightStatus[this.col][this.multi]!=0){
-            //change light to green and others to red
-            stopLightStatus[this.col][this.multi]=0;
-            this.y += this.speed;
-            this.multi+=1;
-          }
-          else if(stopLightStatus[this.col][this.multi]==0){
-            this.y += this.speed;
-            this.multi+=1;
-          }
-        }
-        else{ this.y += this.speed;}
-      }
-      else{ this.y += this.speed;}
-    }
-  }
-}
-
-
-function mousePressed(){
-  if(mouseX > 150 && mouseX < 200) mouseCol = 0;
-  else if(mouseX > 320  && mouseX < 370) mouseCol = 1;
-  else if(mouseX > 490  && mouseX < 540) mouseCol = 2;
-  else if(mouseX > 660  && mouseX < 710) mouseCol = 3;
-  else if(mouseX > 830  && mouseX < 880) mouseCol = 4;
-  else mouseCol = -1;
-
-  if(mouseY > 150 && mouseY < 200) mouseRow = 0;
-  else if(mouseY > 320  && mouseY < 370) mouseRow = 1;
-  else if(mouseY > 490  && mouseY < 540) mouseRow = 2;
-  else if(mouseY > 660  && mouseY < 710) mouseRow = 3;
-  else if(mouseY > 830  && mouseY < 880) mouseRow = 4;
-  else mouseRow = -1;
-
-  if(mouseRow != -1 && mouseCol != -1){
-    pathArray[mouseCol][mouseRow] = 1;
-    yCoord[coordCount] = mouseRow;
-    xCoord[coordCount] = mouseCol;
-    coordCount++;
   }
 
 }
