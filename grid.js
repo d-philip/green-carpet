@@ -1,5 +1,3 @@
-var x,y;
-var multi;
 var counter;
 //Matrix for randomizing initial states of the stoplight at each intersection
 var stopLightStatus =[[Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4),Math.floor(Math.random()*4)],
@@ -12,7 +10,7 @@ var stopLightRightOrDown = [120,290,460,630,800];
 var stopLightLeftOrUp = [230,400,570,740,910];
 
 //Number of seconds to wait before switching times fps
-const seconds = 5*60;
+const seconds = 2*60;
 let car1, car2;
 
 var cars = [];
@@ -21,24 +19,59 @@ function setup() {
   createCanvas(1040,1040);
   counter = seconds;
   frameRate(60);
-  multi = 0;
 
-  cars[0] = new Car(100, 180, 'x', 1);
-  cars[1] = new Car(100, 350, 'x', 2);
-  cars[2] = new Car(100, 520, 'x', 1);
-  cars[3] = new Car(100, 690, 'x', 3);
-  cars[4] = new Car(100, 860, 'x', 1);
-  cars[5] = new Car(180, 100, 'y', 1);
-  cars[6] = new Car(350, 100, 'y', 3);
-  cars[7] = new Car(520, 100, 'y', 2);
-  cars[8] = new Car(690, 100, 'y', 2);
-  cars[9] = new Car(860, 100, 'y', 1);
+  //positive speed cars
+  cars[0] = new Car(130, 180, 0, 0, 'x', 1);
+  cars[1] = new Car(130, 350, 1, 0, 'x', 2);
+  cars[2] = new Car(130, 520, 2, 0, 'x', 1);
+  cars[3] = new Car(130, 690, 3, 0, 'x', 3);
+  cars[4] = new Car(130, 860, 4, 0, 'x', 1);
+  cars[5] = new Car(180 - 20, 100, 0, 0, 'y', 1);
+  cars[6] = new Car(350 - 20, 80, 0, 1, 'y', 3);
+  cars[7] = new Car(520 - 20, 80, 0, 2, 'y', 2);
+  cars[8] = new Car(690 - 20, 100, 0, 3, 'y', 2);
+  cars[9] = new Car(860 - 20, 120, 0, 4, 'y', 1);
+  cars[10] = new Car(130, 180, 0, 0, 'x', 2);
+  cars[11] = new Car(130, 350, 1, 0, 'x', 3);
+  cars[12] = new Car(130, 350, 1, 0, 'x', 2);
+  cars[13] = new Car(130, 690, 3, 0, 'x', 1);
+  cars[14] = new Car(130, 860, 4, 0, 'x', 2);
+  cars[15] = new Car(180 - 20, 100, 0, 0, 'y', 3);
+  cars[16] = new Car(350 - 20, 100, 0, 1, 'y', 2);
+  cars[17] = new Car(520 - 20, 100, 0, 2, 'y', 3);
+  cars[18] = new Car(860 - 20, 80, 0, 4, 'y', 3);
+  cars[19] = new Car(860 - 20, 100, 0, 4, 'y', 2);
+
+  //negative speed cars
+  cars[20] = new Car(950, height - 180 - 20, 0, 0, 'x', -1);
+  cars[21] = new Car(950, height - 350 - 20, 1, 0, 'x', -1);
+  cars[22] = new Car(950, height - 520 - 20, 2, 0, 'x', -1);
+  cars[23] = new Car(950, height - 690 - 20, 3, 0, 'x', -1);
+  cars[24] = new Car(950, height - 860 - 20, 4, 0, 'x', -1);
+
+  cars[25] = new Car(width - 180, 950-20, 0, 0, 'y', -1);
+  cars[26] = new Car(width - 350, 950-20, 0, 1, 'y', -1);
+  cars[27] = new Car(width - 520, 950-20, 0, 2, 'y', -1);
+  cars[28] = new Car(width - 690, 950-20, 0, 3, 'y', -1);
+  cars[29] = new Car(width - 860, 950-20, 0, 4, 'y', -1);
+
+  cars[30] = new Car(950, height - 180 - 20, 0, 0, 'x', -1);
+  cars[31] = new Car(950, height - 350 - 20, 1, 0, 'x', -1);
+  cars[32] = new Car(950, height - 350 - 20, 1, 0, 'x', -1);
+  cars[33] = new Car(950, height - 690 - 20, 3, 0, 'x', -1);
+  cars[34] = new Car(950, height - 860 - 20, 4, 0, 'x', -1);
+
+  cars[35] = new Car(width - 180, 950, 0, 0, 'y', -1);
+  cars[36] = new Car(width - 350, 950, 0, 1, 'y', -2);
+  cars[37] = new Car(width - 520, 950, 0, 2, 'y', -1);
+  cars[38] = new Car(width - 860, 950-40, 0, 4, 'y', -1);
+  cars[39] = new Car(width - 860, 950, 0, 4, 'y', -1);
 }
 
 function draw() {
   //Draws background and buildings
-  background(80);
-  fill(255);
+  background(60);
+  fill(220);
   for(var i = 0; i < 6; i++){
     for(var j = 0; j < 6; j++){
       rect(170*i+30 ,170*j+30, 120,120);
@@ -74,7 +107,7 @@ function draw() {
   for(var i = 0; i < cars.length; i++){
     blocked = false;
     for(var j = 0; j < cars.length; j++){
-      if(i!=j && lookahead(cars[i],cars[j])){
+      if(i!=j && lookahead(cars[i],cars[j])){ //If any car blocks path, set blocked to true and stop any movement
         blocked = true;
       }
     }
@@ -111,71 +144,113 @@ function chooseColor(i,j,pos){
   }
 }
 
-
-function lookahead(car1,car2){
-  if(car1.speed >= 0 && car2.speed >= 0){
-    if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x < car2.x && (car2.x - car1.x) < 20)){
+function lookahead(car1,car2){ //Car1 is the "chase car", whose position and direction is being compared to car2
+  if(car1.speed >= 0 && car2.speed >= 0){ //check if both cars are moving in a positive direction
+    if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x < car2.x && (car2.x - car1.x) < 20)){ //check if both are moving along the same x axis, if car1 is behind car2, and if car1 is too close to car2
         return true;
     }
-    else if(car1.direction == 'y' && car2.direction == 'y' && car1.x == car2.x && (car1.y < car2.y && (car2.y - car1.y) < 20)){
+    else if(car1.direction == 'y' && car2.direction == 'y' && car1.x == car2.x && (car1.y < car2.y && (car2.y - car1.y) < 20)){ //check if both are moving along the same y axis, if car1 is behind car2, and if car1 is too close to car2
         return true;
     }
   }
   else if(car1.speed <= 0 && car2.speed <= 0){
-    if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x > car2.x && (car1.x - car2.x) < 20)){
+    if(car1.direction == 'x' && car2.direction == 'x' && car1.y == car2.y && (car1.x > car2.x && (car1.x - car2.x) < 20)){ //check if both are moving along the same x axis, if car1 is behind car2, and if car1 is too close to car2
         return true;
     }
-    else if(car1.direction == 'y' && car2.direction == 'y' && car1.x == car2.x && (car1.y > car2.y && (car1.y - car2.y) < 20)){
+    else if(car1.direction == 'y' && car2.direction == 'y' && car1.x == car2.x && (car1.y > car2.y && (car1.y - car2.y) < 20)){ //check if both are moving along the same y axis, if car1 is behind car2, and if car1 is too close to car2
         return true;
     }
   }
   return false;
 }
 
-
-
 class Car{
-  constructor(x, y, direction, speed){
+  constructor(x, y, row, col, direction, speed){
     this.x = x;
     this.y = y;
+    this.row = row;
+    this.col = col;
     this.multi=0;
     this.speed = speed;
-    this.c = color(100, 150, 200);
+    this.c = color(153, 204, 225);
     this.direction = direction;
   }
 
   move(){
+  //looping around edges and randomizing speed
 
+  if(this.x >= width-20){
+    this.x = 90;
+    this.multi = 0;
+    this.speed = Math.floor(Math.random()*3)+1;
+  }else if(this.x < 0+20){
+    this.x = 930;
+    this.multi = 0;
+    this.speed = -(Math.floor(Math.random()*3))-1;
+  }else if(this.y >= height-20){
+    this.y = 90;
+    this.multi = 0;
+    this.speed = Math.floor(Math.random()*3)+1;
+  }else if(this.y < 0+20){
+    this.y = 930;
+    this.multi = 0;
+    this.speed = -(Math.floor(Math.random()*3))-1;
+  }
+
+//
+if(this.speed > 0){
   if(this.direction == 'x'){
-    if(this.multi<=6){
+    if(this.multi<=4){
       if(this.x>=130+(170*this.multi)){
-        if(stopLightStatus[this.multi][0]==3){
+        if(stopLightStatus[this.multi][this.row]==3){
           this.x += this.speed;
           this.multi+=1;
         }
       }
-    else{ this.x += this.speed;}
+      else{ this.x += this.speed;}
     }
+    else{ this.x += this.speed;}
   }
-   if(this.direction == 'y'){
+  if(this.direction == 'y'){
     if(this.multi<=4){
       if(this.y>=130+(170*this.multi)){
-        if(stopLightStatus[0][this.multi]==0){
+        if(stopLightStatus[this.col][this.multi]==0){
           this.y += this.speed;
           this.multi+=1;
         }
       }
-      else{ this.y += this.speed;}
+        else{ this.y += this.speed;}
     }
+    else{ this.y += this.speed;}
   }
 }
-
-  brake(){
-    if(this.speed > 0)
-    {
-      this.speed -= 0.3;
+else{
+  if(this.direction == 'x'){
+    if(this.multi<=4){
+      if(this.x<=890-(170*this.multi)){
+        if(stopLightStatus[4-this.multi][4-this.row]==1){
+          this.x += this.speed;
+          this.multi+=1;
+        }
+      }
+      else{ this.x += this.speed;}
     }
+    else{ this.x += this.speed;}
   }
+  if(this.direction == 'y'){
+    if(this.multi<=4){
+      if(this.y<=890-(170*this.multi)){
+        if(stopLightStatus[4-this.col][4-this.multi]==2){
+          this.y += this.speed;
+          this.multi+=1;
+        }
+      }
+        else{ this.y += this.speed;}
+    }
+    else{ this.y += this.speed;}
+  }
+}
+}
 
   display(){
     fill(this.c);
@@ -202,5 +277,8 @@ class Car{
 }
 
 class Ambulance extends Car{
-
+  constructor(x, y, row, col, direction, speed){
+    super(x, y, row, col, direction, speed);
+    this.c = color(225, 175, 100);
+  }
 }
