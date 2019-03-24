@@ -103,8 +103,8 @@ function draw() {
   }
 
   //Draws Ambulance
-  //ambulance.display();
-  //ambulance.move();
+  ambulance.display();
+  ambulance.move();
 
   //car v car collision detection
   var blocked = false;
@@ -281,24 +281,8 @@ class Ambulance extends Car{
     this.c = color(225, 175, 100);
   }
   move(){
-<<<<<<< HEAD
-    if(xCoord.length != 0){
-      // move to desired x-coord
-      if((((xCoord[xcnt-1]*170)+170) - this.x) > 0){
-        this.x += this.speed;
-      }
-      else if((((xCoord[xcnt-1]*170)+170) - this.x) < 0){
-        this.x -= this.speed;
-      }
-      if(Math.abs(((xCoord[xcnt-1]*170)+170) - this.x) <= 2){
-        // move to desired y-coord
-        if((((yCoord[ycnt-1]*170)+170) - this.y) > 0){
-          this.y += this.speed;
-        }
-        else if((((yCoord[ycnt-1]*170)+170) - this.y) < 0){
-          this.y -= this.speed;
-        }
-=======
+
+
 
     ambulanceCount++;
     //Finds the direction that the ambulance will approach the next light from
@@ -369,8 +353,29 @@ class Ambulance extends Car{
       else{
         futureDir1 = 2;
         stopLightStatus[xCoord[ambulanceCount]][yCoord[ambulanceCount]] = futureDir1;
->>>>>>> origin/sean2branch
+      }
+    }
+    if(xCoord.length != 0){
+      // move to desired x-coord
+      if((((xCoord[xcnt-1]*170)+170) - this.x) > 0){
+        this.x += this.speed;
+      }
+      else if((((xCoord[xcnt-1]*170)+170) - this.x) < 0){
+        this.x -= this.speed;
+      }
+      if(Math.abs(((xCoord[xcnt-1]*170)+170) - this.x) <= 2){
+      //   // move to desired y-coord
+        if((((yCoord[ycnt-1]*170)+170) - this.y) > 0){
+          this.y += this.speed;
+        }
+        else if((((yCoord[ycnt-1]*170)+170) - this.y) < 0){
+          this.y -= this.speed;
+        }
+        if(Math.abs(((yCoord[ycnt-1]*170)+170) - this.y) <= 2){
+          ambulanceCount++;;
+        }
       }
     }
   }
+
 }
