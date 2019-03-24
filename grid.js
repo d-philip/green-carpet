@@ -10,7 +10,7 @@ var stopLightRightOrDown = [120,290,460,630,800];
 var stopLightLeftOrUp = [230,400,570,740,910];
 
 //Number of seconds to wait before switching times fps
-const seconds = 5*60;
+const seconds = 2*60;
 let car1, car2;
 
 var cars = [];
@@ -30,6 +30,16 @@ function setup() {
   cars[7] = new Car(520, 100, 0, 2, 'y', 2);
   cars[8] = new Car(690, 100, 0, 3, 'y', 2);
   cars[9] = new Car(860, 100, 0, 4, 'y', 1);
+  cars[10] = new Car(100, 180, 0, 0, 'x', 2);
+  cars[11] = new Car(100, 350, 1, 0, 'x', 3);
+  cars[12] = new Car(100, 350, 2, 0, 'x', 2);
+  cars[13] = new Car(100, 690, 3, 0, 'x', 1);
+  cars[14] = new Car(100, 860, 4, 0, 'x', 2);
+  cars[15] = new Car(180, 100, 0, 0, 'y', 3);
+  cars[16] = new Car(350, 100, 0, 1, 'y', 2);
+  cars[17] = new Car(520, 100, 0, 2, 'y', 3);
+  cars[18] = new Car(860, 100, 0, 3, 'y', 3);
+  cars[19] = new Car(860, 100, 0, 4, 'y', 2);
 }
 
 function draw() {
@@ -144,6 +154,24 @@ class Car{
   }
 
   move(){
+  //looping around edges and randomizing speed
+  if(this.x >= width){
+    this.x = 0;
+    this.multi = 0;
+    this.speed = Math.floor(Math.random()*3);
+  }else if(this.x <= 0){
+    this.x = width;
+    this.multi = 0;
+    this.speed = -Math.floor(Math.random()*3);
+  }else if(this.y >= width){
+    this.y = 0;
+    this.multi = 0;
+    this.speed = Math.floor(Math.random()*3);
+  }else if(this.y <= 0){
+    this.y = width;
+    this.multi = 0;
+    this.speed = -Math.floor(Math.random()*3);
+  }
 
   if(this.direction == 'x'){
     if(this.multi<=4){
